@@ -175,4 +175,27 @@ Errores: `400` formato de RUT inválido · `401` token ausente/inválido/expirad
 
 ## Uso de herramientas de IA
 
-Ver [`ai_interactions.md`](./ai_interactions.md).
+Usé **Claude Code** como pair programmer: genera el primer borrador, yo dirijo,
+reviso, refactorizo y tomo las decisiones de arquitectura y alcance.
+
+### Generado con IA (borrador inicial, luego revisado por mí)
+- Scaffolding del monorepo (`package.json`, `tsconfig`, estructura de carpetas).
+- Primera versión de middlewares, rutas, hash de score y utilidades de RUT.
+- Batería de tests y componentes base de React.
+
+### Mis decisiones y cambios
+- **Arquitectura:** separar `app.ts` de `index.ts` para testear sin abrir puerto;
+  mover `ApiError` de `types.ts` a `api/errors.ts` (los tipos son solo DTOs).
+- **Alcance:** no forzar el dígito verificador del RUT porque el ejemplo del
+  enunciado (`12.345.678-9`) tiene DV inválido; dejar `isValidDv` disponible.
+- **Frontend:** rediseño de estilos (toggle de contraseña, badges de riesgo,
+  `focus-visible`, `prefers-reduced-motion`), accesibilidad del `Notification`
+  (`role` según tipo), metadatos del `index.html`.
+- **Revisión:** orden de middlewares y códigos HTTP (401 vs 403), limpieza de
+  comentarios redundantes.
+
+### Sin IA
+- Pruebas end-to-end manuales en el navegador.
+- `npm run typecheck`, `npm test`, `npm run build` en ambos paquetes.
+- Historia de commits granular.
+
